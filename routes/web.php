@@ -7,13 +7,13 @@ Route::get('/', function () {
 });
 
 Route::get('/about', function () {
-    return view('about',['nama'=>'Daphne Ananta']);
+    return view('about', ['nama' => 'Daphne Ananta']);
 });
 
 Route::get('/blog', function () {
     return view('blog');
 });
 
-Route::get('/email', function () {
-    return view('email',['email'=>'Daphneananta@gmail.com','socialMedia'=>"@DaphneAnanta"]);
+Route::get('/contact', function () {
+    return view('contact');
 });

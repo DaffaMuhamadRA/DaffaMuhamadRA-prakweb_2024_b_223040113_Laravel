@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Halaman About</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Halaman Contact</title>
 </head>
 <body>
     <a href="/">home</a>
     <a href="/blog">blog</a>
     <a href="/about">about</a>
     <a href="/contact">contact</a>
-    <h1>Halaman About</h1>
-    <h3> Owner : {{ $nama }} </h3>
-    <img src="img/daphne.png" alt="Daphne Ananta" width="500">
+    <h1>Halaman Contact</h1>
+    
+    <ul>
+        <li><a href="https//instagram.com//thisisdans__">Instagram</a></li>
+        
+    </ul>
 </body>
 </html>
+
+
