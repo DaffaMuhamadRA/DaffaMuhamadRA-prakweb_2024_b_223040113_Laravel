@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Halaman About</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <a href="/">home</a>
-    <a href="/blog">blog</a>
-    <a href="/about">about</a>
-    <a href="/contact">contact</a>
-    <h1>Halaman About</h1>
-    <h3> Owner : {{ $nama }} </h3>
+<x-layout>
+    <x-slot:tittle>{{ $tittle }}</x-slot>
+    <h3 class ="text-xl">About</h3>
+    <li><a href="https//instagram.com//thisisdans__">Instagram</a></li>
+    <h4> Owner : {{ $nama }} </h4>
     <img src="img/daphne.png" alt="Daphne Ananta" width="500">
-</body>
-</html>
+  </x-layout>
+
+
