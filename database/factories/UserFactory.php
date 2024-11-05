@@ -29,6 +29,10 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+
+            // $a = $a ? $a : $b; // Ternary Operator - $a jika ada maka pakai a, jika tidak timpa dengan $b (kondisi if-else).
+            // $a = $a ?: $b; // Elvis Operator - sama aja cuman lebih singkat
+            // $a ??= $b; // null coalescing Operator - ini apalagi, lebih singkat
         ];
     }
 
@@ -37,8 +41,10 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
+
+
 }
