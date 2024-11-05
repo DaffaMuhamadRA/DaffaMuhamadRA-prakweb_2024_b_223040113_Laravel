@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use App\Models\User;
 
 
 Route::get('/', function () {
@@ -24,6 +24,11 @@ Route::get('/post/{post:slug}', function (Post $post) {
 
     // $post = Post::find($slug);
     return view('post', ['title' => 'Single Post', 'post' => $post]);
+});
+Route::get('/authors/{user}', function (User $user) {
+
+    // $post = Post::find($slug);
+    return view('posts', ['title' => 'Articles By '.$user->name, 'posts' => $user->posts]);
 });
 
 Route::get('/contact', function () {
