@@ -11,6 +11,17 @@ class Post extends Model
 
     protected $fillable = ['title', 'author', 'slug', 'body'];
 
+    // fungsi with untuk mengambil data author dan category secara eger load
+
+    /* kelebihan eger load adalah data author dan category akan diambil sekaligus dibandingkan dengan lazy load
+        tapi kekurangannya adalah data author dan category akan diambil meskipun tidak digunakan
+
+        kelebihan lazy load adalah data author dan category akan diambil ketika dipanggil saja,
+        tapi kekurangannya adalah data author dan category akan diambil berkali-kali ketika dipanggil berkali-kali
+    */
+    
+    protected $with = ['author', 'category'];
+
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class);
