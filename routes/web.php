@@ -5,6 +5,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
 
+use function Laravel\Prompts\search;
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
@@ -15,14 +16,14 @@ Route::get('/about', function () {
 });
 
 Route::get('/posts', function () {
-    
-    // fungsi with untuk mengambil data author dan category secara eger load
+
+    // - fungsi with untuk mengambil data author dan category secara eger load
     // $posts = Post::with(['author','category'])->latest()->get();
 
-    $posts = Post::latest()->get();
+    
     return view('posts', [
         'title' => 'Blog',
-        'posts' => $posts
+        'posts' => Post::filter(request(['search','category','author']))->latest()->get()
     ]);
 });
 
