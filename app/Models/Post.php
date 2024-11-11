@@ -55,7 +55,15 @@ class Post extends Model
         );
     }   
 
-
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+    
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     
     // public static function all()
