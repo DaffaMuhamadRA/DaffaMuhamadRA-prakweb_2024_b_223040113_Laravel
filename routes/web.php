@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Category;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\DashboardController;
 
 use function Laravel\Prompts\search;
 
@@ -55,7 +57,13 @@ Route::get('/contact', function () {
 // Route::get('/login', function () {
 //     return view('logins.login', ['title' => 'login']);
 // });
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login')-> middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');

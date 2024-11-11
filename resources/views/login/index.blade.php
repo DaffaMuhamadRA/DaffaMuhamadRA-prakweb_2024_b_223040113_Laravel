@@ -3,28 +3,45 @@
     <div class="row justify-content-center">
         <div class="col-lg-5">
 
-           
+           {{-- Login success --}}
                 @if (@session()->has('success'))
                     <div class="alert alert-success d-flex align-items-center" role="alert">
-                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-                        <div>
-                            {{ session('success') }}
-                        </div>
+                        <i class="bi bi-check-circle">{{ session('success') }}</i>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                {{-- Login Failed --}}
+                @if (@session()->has('loginError'))
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <i class="bi bi-x-circle"> {{ session('loginError') }}</i> 
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
             <main class="form-signin w-100 m-auto">
                 <h1 class="h3 mb-3 fw-normal text-center">Please Login</h1>
-                <form>
-        
+                <form action="/login" method="POST">
+                    @csrf
                     <div class="form-floating">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-                        <label for="floatingInput">Email address</label>
+                        <input type="email" name="email" class="form-control
+
+                        @error('email') 
+                            is-invalid
+                        @enderror
+
+                        " id="email" placeholder="name@example.com" required autofocus value="{{ old('email') }}">
+                        <label for="email" >Email address</label>
+
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
-                        <label for="floatingPassword">Password</label>
+                        <input type="password" class="form-control" name= "password" id="password" placeholder="Password" required>
+                        <label for="password">Password</label>
                     </div>
         
                     

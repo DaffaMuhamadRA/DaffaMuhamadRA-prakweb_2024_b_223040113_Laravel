@@ -12,8 +12,7 @@
               <x-nav-link href="/posts" :active="request()->is('/posts')">Blog</x-nav-link>
               <x-nav-link href="/about" :active="request()->is('/about')">About</x-nav-link>
               <x-nav-link href="/contact" :active="request()->is('/contact')">Contact</x-nav-link>
-               {{-- login --}}
-            <x-nav-link href="/login" :active="request()->is('/login')"><i class="bi bi-box-arrow-right"></i> Login</x-nav-link>
+               
 
             </div>
           </div>
@@ -22,11 +21,10 @@
           <div class="ml-4 flex items-center md:ml-6">
 
            
-
-
-
-
-            <!-- Profile dropdown -->
+            {{-- Auth --}}
+            @auth
+            
+            <p class="text-white mt-3">{{ auth()->user()->name }}</p>
             <div class="relative ml-3">
               
               <div>
@@ -46,11 +44,23 @@
               x-transition:leave-end="opacity-0 scale-95"
               class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                 <!-- Active: "bg-gray-100", Not Active: "" -->
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0"><i class="bi bi-gear"> Dashboard</i></a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1"><i class="bi bi-gear"> Settings</i></a>
+                <form action="/logout" method="POST">
+                  @csrf
+                  <button type="submit" class="block px-4 py-2 text-sm text-gray-700 dropdown-item hover:underline" role="menuitem"><i class="bi bi-box-arrow-left"> Sign out</i></button>
+                </form>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2"></a>
               </div>
             </div>
+              @else
+                {{-- login --}}
+                <x-nav-link href="/login" :active="request()->is('/login')"><i class="bi bi-box-arrow-right"></i> Login</x-nav-link>
+            @endauth
+
+
+            <!-- Profile dropdown -->
+            
           </div>
         </div>
         <div class="-mr-2 flex md:hidden">
