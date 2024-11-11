@@ -56,4 +56,6 @@ Route::get('/contact', function () {
 //     return view('logins.login', ['title' => 'login']);
 // });
 Route::get('/login', [LoginController::class, 'index']);
+
 Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'store']);

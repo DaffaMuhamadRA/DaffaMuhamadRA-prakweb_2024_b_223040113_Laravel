@@ -18,7 +18,6 @@ class CategorySeeder extends Seeder
             'name' => 'Web Design',
             'slug' => 'Web-Dessign',
             'color' => 'red'
-            
         ]);
 
         Category::create([
