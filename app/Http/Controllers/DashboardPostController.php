@@ -7,6 +7,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\Auth;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 class DashboardPostController extends Controller
 {
@@ -37,19 +39,37 @@ class DashboardPostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        return $request;
-    }
+{
+    $validatedData = $request->validate([
+        'title' => 'required|max:255',
+        'slug' => 'required|unique:posts',
+        'category_id' => 'required',
+        'body' => 'required'
+    ]);
+
+    // Bersihkan konten body menggunakan HTML Purifier
+    $config = HTMLPurifier_Config::createDefault();
+    $purifier = new HTMLPurifier($config);
+    $validatedData['body'] = $purifier->purify($validatedData['body']);
+
+    $validatedData['author_id'] = auth()->user()->id;
+
+    Post::create($validatedData);
+
+    return redirect('/dashboard/posts')->with('success', 'New post has been added!');
+}
 
     /**
      * Display the specified resource.
      */
     public function show(Post $post)
     {
-        return view('dashboard.posts.show',
-        [
-            'post' => $post
-        ]);
+        // Bersihkan konten body menggunakan HTML Purifier sebelum menampilkan
+        $config = HTMLPurifier_Config::createDefault();
+        $purifier = new HTMLPurifier($config);
+        $post->body = $purifier->purify($post->body);
+    
+        return view('dashboard.posts.show', ['post' => $post]);
     }
 
     /**

@@ -11,7 +11,7 @@ class Post extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $fillable = ['title', 'author', 'slug', 'body'];
+    protected $fillable = ['title', 'slug', 'category_id', 'body', 'author_id'];
 
     // fungsi with untuk mengambil data author dan category secara eger load
 
