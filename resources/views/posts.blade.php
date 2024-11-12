@@ -61,7 +61,7 @@
                       <span class="text-sm">{{ $post->created_at->diffForHumans() }}</span>
                 </div>
                 <a href="/post/{{ $post->slug }}"><h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white hover:underline">{{ $post['title'] }}</h2></a>
-                <p class="mb-5 font-light text-gray-500 dark:text-gray-400">{{ Str::limit($post['body'], 100) }}</p>
+                <p class="mb-5 font-light text-gray-500 dark:text-gray-400">{{ Str::limit($post['body'], 100) }} </p>
                 <div class="flex justify-between items-center">
                   <div class="flex items-center space-x-3">
                     <img class="w-7 h-7 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="{{ $post->author->name }}" />

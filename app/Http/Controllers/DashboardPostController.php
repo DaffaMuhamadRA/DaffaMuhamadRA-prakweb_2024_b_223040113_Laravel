@@ -10,6 +10,8 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
+use function Laravel\Prompts\alert;
+
 class DashboardPostController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class DashboardPostController extends Controller
      */
     public function index()
     {
-        
+       
 
         return view('dashboard.posts.index', [
             'posts' => Post::where('author_id', auth()->user()->id)->get()
@@ -63,21 +65,24 @@ class DashboardPostController extends Controller
      * Display the specified resource.
      */
     public function show(Post $post)
-    {
-        // Bersihkan konten body menggunakan HTML Purifier sebelum menampilkan
-        $config = HTMLPurifier_Config::createDefault();
-        $purifier = new HTMLPurifier($config);
-        $post->body = $purifier->purify($post->body);
-    
-        return view('dashboard.posts.show', ['post' => $post]);
-    }
+{
+    // Bersihkan konten body menggunakan HTML Purifier sebelum menampilkan
+    $config = HTMLPurifier_Config::createDefault();
+    $purifier = new HTMLPurifier($config);
+    $post->body = $purifier->purify($post->body);
+
+    return view('dashboard.posts.show', ['post' => $post]);
+}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post)
     {
-        //
+        return view('dashboard.posts.edit',[
+            'post' => $post,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -85,7 +90,27 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'body' => 'required'
+        ];
+
+        if($request->slug != $post->slug){
+            $rules['slug'] = 'required|unique:posts';
+        }
+
+        $validatedData = $request->validate($rules);
+        $config = HTMLPurifier_Config::createDefault();
+        $purifier = new HTMLPurifier($config);
+        $validatedData['body'] = $purifier->purify($validatedData['body']);
+
+        $validatedData['author_id'] = auth()->user()->id;
+
+        Post::where('id', $post->id)
+            ->update($validatedData);
+
+        return redirect('/dashboard/posts')->with('success', 'Post Has Been Updated!');
     }
 
     /**
@@ -93,7 +118,9 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+
+        return redirect('/dashboard/posts')->with('success', 'Post has been deleted!');
     }
 
     public function checkSlug(Request $request)
