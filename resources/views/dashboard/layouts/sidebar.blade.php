@@ -14,7 +14,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link d-flex align-items-center gap-2 {{ Request::is('dashboard/posts') ? 'active' : '' }} {{ Request::is('dashboard/posts') ? '' : 'text-dark' }} " href="{{ url('/dashboard/posts') }}">
+              <a class="nav-link d-flex align-items-center gap-2 {{ Request::is('dashboard/posts*') ? 'active' : '' }} {{ Request::is('dashboard/posts*') ? '' : 'text-dark' }} " href="{{ url('/dashboard/posts') }}">
                 <svg class="bi"><use xlink:href="#file-earmark"/></svg>
                 My Posts
             </a>
