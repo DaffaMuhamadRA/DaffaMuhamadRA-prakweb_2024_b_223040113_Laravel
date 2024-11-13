@@ -128,6 +128,7 @@ class DashboardPostController extends Controller
 
         $validatedData['author_id'] = auth()->user()->id;
 
+        // update post
         Post::where('id', $post->id)
             ->update($validatedData);
 
