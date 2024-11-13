@@ -10,6 +10,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+use function Laravel\Prompts\password;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -24,10 +26,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // User::create([
-        //     'name' => 'Test User',
-        //     'email' => ''
-        // ]);
+        User::create([
+            'name' => 'DAN',
+            'username' => 'dandan',
+            'email' => 'dandan@gmail.com',
+            'password'=> bcrypt('password')
+        ]);
         
         //fungsi memanggil seeder lain
         $this->call([CategorySeeder::class, UserSeeder::class]);

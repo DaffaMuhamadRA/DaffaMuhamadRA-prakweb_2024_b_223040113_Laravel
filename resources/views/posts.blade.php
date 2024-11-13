@@ -60,6 +60,12 @@
                   </a>
                       <span class="text-sm">{{ $post->created_at->diffForHumans() }}</span>
                 </div>
+                @if ($post->image)
+                
+                <div class="mb-6 not-format ml-4" style="width: 300px; height: 400px;">
+                  <img class="w-full h-96 object-cover rounded-lg" src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->category->name }}">
+                </div>
+              @endif
                 <a href="/post/{{ $post->slug }}"><h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white hover:underline">{{ $post['title'] }}</h2></a>
                 <p class="mb-5 font-light text-gray-500 dark:text-gray-400">{{ Str::limit($post['body'], 100) }} </p>
                 <div class="flex justify-between items-center">

@@ -27,9 +27,9 @@
 
         <ul class="nav flex-column mb-auto">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-2" href="#">
-              <svg class="bi"><use xlink:href="#gear-wide-connected"/></svg>
-              Settings
+            <a class="nav-link d-flex align-items-center gap-2 {{ Request::is('posts*') ? 'active' : '' }} {{ Request::is('posts*') ? '' : 'text-dark' }} " href="/posts">
+              <i class="bi bi-file-post"></i>
+              See All Posts
             </a>
           </li>
           <li class="nav-item">

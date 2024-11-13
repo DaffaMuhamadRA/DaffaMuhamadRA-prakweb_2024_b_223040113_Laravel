@@ -42,12 +42,19 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
 {
+    // dd($request);
+   
     $validatedData = $request->validate([
         'title' => 'required|max:255',
         'slug' => 'required|unique:posts',
         'category_id' => 'required',
+        'image' => 'image|file|max:1024',
         'body' => 'required'
     ]);
+
+    if($request->file('image')){
+        $validatedData['image'] = $request->file('image')->store('post-images');
+    }
 
     // Bersihkan konten body menggunakan HTML Purifier
     $config = HTMLPurifier_Config::createDefault();
