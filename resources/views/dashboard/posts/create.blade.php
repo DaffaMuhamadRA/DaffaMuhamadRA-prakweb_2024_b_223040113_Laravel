@@ -8,6 +8,8 @@
 <div class="col-lg-8">
     <form method="post" action="/dashboard/posts" class="mb-5" enctype="multipart/form-data">
         @csrf
+
+        {{-- title --}}
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control @error('title') is-invalid @enderror " id="title" name="title" required autofocus value="{{ old('title') }}">
@@ -19,6 +21,7 @@
 
         </div>
 
+        {{-- slug --}}
         <div class="mb-3">
             <label for="slug" class="form-label">Slug</label>
             <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" required value="{{ old('slug') }}">
@@ -29,6 +32,7 @@
             @enderror
         </div>
 
+        {{-- category --}}
         <div class="mb-3">
             <label for="category" class="form-label">Category</label>
             <select class="form-select" name='category_id'>
@@ -43,9 +47,11 @@
             </select>
         </div>
 
+        {{-- image --}}
         <div class="mb-3">
-            <label for="image" class="form-label @error('image') is-invalid @enderror">Post Image</label>
-            <input class="form-control" type="file" id="image" name="image">
+            <label for="image" class="form-label ">Post Image</label>
+            <img src="" alt="" class="img-preview img-fluid">
+            <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" onchange="previewImage()">
             @error('image')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -53,6 +59,7 @@
             @enderror
           </div>
 
+          {{-- body --}}
         <div class="mb-3">
             <label for="body" class="form-label">Body</label>
             @error('body')
@@ -90,6 +97,22 @@
             fileButtonGroup.style.display = "none";
         }
     });
+
+    // image preview
+
+    function previewImage() {
+        const image = document.querySelector("#image");
+        const imgPreview = document.querySelector(".img-preview");
+
+        imgPreview.style.display = "block";
+
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+
+        oFReader.onload = function(oFREvent) {
+            imgPreview.src = oFREvent.target.result;
+        }
+    }
 </script>
 @endsection
 

@@ -9,6 +9,7 @@ use \Illuminate\Support\Facades\Auth;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use HTMLPurifier;
 use HTMLPurifier_Config;
+use Illuminate\Support\Facades\Storage;
 
 use function Laravel\Prompts\alert;
 
@@ -100,14 +101,27 @@ class DashboardPostController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
+            'image' => 'image|file|max:1024',
             'body' => 'required'
         ];
+
+        
 
         if($request->slug != $post->slug){
             $rules['slug'] = 'required|unique:posts';
         }
 
         $validatedData = $request->validate($rules);
+
+        // pastikan image  setelah validasi data
+        if($request->file('image')){
+            if($request->oldImage){
+                // hapus image lama
+                Storage::delete($request->oldImage);
+            }
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
+
         $config = HTMLPurifier_Config::createDefault();
         $purifier = new HTMLPurifier($config);
         $validatedData['body'] = $purifier->purify($validatedData['body']);
@@ -125,8 +139,13 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
-        Post::destroy($post->id);
 
+        if($post->image){
+            // hapus image
+            Storage::delete($post->image);
+        }
+
+        Post::destroy($post->id);
         return redirect('/dashboard/posts')->with('success', 'Post has been deleted!');
     }
 
