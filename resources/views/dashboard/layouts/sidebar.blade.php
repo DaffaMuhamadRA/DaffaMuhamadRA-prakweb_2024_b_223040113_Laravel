@@ -35,10 +35,29 @@
           <li class="nav-item">
             <form action="/logout" method="POST">
               @csrf
-              <button type="submit" class="block px-4 py-2 text-sm text-gray-700 dropdown-item hover:underline nav-link px-3 bg-danger" role="menuitem"><i class="bi bi-box-arrow-left text-dark"> Sign out</i></button>
+              <button type="submit" class="block py-2 text-sm text-gray-700 dropdown-item hover:underline nav-link px-3 bg-danger" role="menuitem"><i class="bi bi-box-arrow-left text-dark"> Sign out</i></button>
             </form>
           </li>
         </ul>
+
+        {{-- gate yang hanya bisa diakses oleh admin --}}
+        @can('admin')
+      <div>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Administrator</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {{ Request::is('dashboard/categories*') ? 'active' : '' }} {{ Request::is('dashboard/categories*') ? '' : 'text-dark' }} " href="dashboard/categories">
+              <i class="bi bi-bookmarks-fill"></i>
+              Post Categories
+            </a>
+          </li>
+        </ul>
+      </div>
+      @endcan
+
+
       </div>
     </div>
   </div>
